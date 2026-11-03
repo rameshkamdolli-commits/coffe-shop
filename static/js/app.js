@@ -1,0 +1,7 @@
+function toggleChat(){document.getElementById("chatbox").classList.toggle("open");}
+const chatForm=document.getElementById("chatform");
+if(chatForm){chatForm.addEventListener("submit",async e=>{e.preventDefault();const input=document.getElementById("chatinput");const msg=input.value.trim();if(!msg)return;appendChat(msg,"user");input.value="";try{const res=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:msg})});const data=await res.json();appendChat(data.reply,"bot");}catch(err){appendChat("Sorry, chat is temporarily unavailable. Please try again.","bot");}});}
+function appendChat(text,cls){const log=document.getElementById("chatlog");const p=document.createElement("p");p.className=cls;p.textContent=text;log.appendChild(p);log.scrollTop=log.scrollHeight;}
+const search=document.getElementById("productSearch");let chosen="all";
+function filterMenu(){if(!search)return;const q=search.value.toLowerCase();document.querySelectorAll(".product").forEach(card=>{const okCat=chosen==="all"||card.dataset.category===chosen;const okText=card.dataset.name.includes(q)||card.textContent.toLowerCase().includes(q);card.style.display=okCat&&okText?"flex":"none";});}
+if(search){search.addEventListener("input",filterMenu);document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{chosen=btn.dataset.cat;filterMenu();}));}

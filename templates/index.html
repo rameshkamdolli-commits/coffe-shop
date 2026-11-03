@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Chai & Coffee | Home{% endblock %}{% block content %}
+<section class="hero"><div><p class="eyebrow">YOUR DAILY COFFEE BREAK</p><h1>Good coffee.<br>Good mood.</h1><p>Freshly brewed coffee, Indian chai, sweet treats and satisfying snacks.</p><a class="btn" href="{{ url_for('menu') }}">Explore Menu</a></div></section>
+<section class="section"><h2>Customer favourites</h2><div class="grid">{% for p in products[:6] %}<article class="card"><div class="food-icon">☕</div><h3>{{ p.name }}</h3><p>{{ p.description }}</p><b>₹{{ p.price }}</b><form method="post" action="{{ url_for('add_to_cart',product_id=p.id) }}"><button class="btn">Add to Cart</button></form></article>{% endfor %}</div></section>
+<section class="promo"><h2>A little break, a lot of happiness.</h2><a class="btn light" href="{{ url_for('about') }}">Our Story</a></section>{% endblock %}
